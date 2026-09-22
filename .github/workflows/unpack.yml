@@ -1,1 +1,39 @@
 
+name: Unpack Android Source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Unpack source ZIP
+        shell: bash
+        run: |
+          unzip -o AIStudyPersonal-source-v1.0.0.zip -d extracted
+          shopt -s dotglob
+          files=(extracted/*)
+
+          if [ ${#files[@]} -eq 1 ] && [ -d "${files[0]}" ]; then
+            cp -a "${files[0]}"/. .
+          else
+            cp -a extracted/. .
+          fi
+
+          rm -rf extracted
+
+      - name: Commit extracted source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Unpack Android project source" || exit 0
+          git push
