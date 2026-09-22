@@ -1,5 +1,6 @@
 plugins { id 'com.android.application' }
-
+def resolvedVersionCode = Integer.parseInt(System.getenv('APP_VERSION_CODE') ?: '1')
+def resolvedVersionName = System.getenv('APP_VERSION_NAME') ?: '1.0.0'
 android {
     namespace 'cn.study.personal'
     compileSdk 35
@@ -8,8 +9,8 @@ android {
         applicationId 'cn.study.personal'
         minSdk 26
         targetSdk 35
-        versionCode (System.getenv('APP_VERSION_CODE') ?: '1').toInteger()
-        versionName System.getenv('APP_VERSION_NAME') ?: '1.0.0'
+       versionCode resolvedVersionCode
+versionName resolvedVersionName
     }
     signingConfigs {
         personal {
