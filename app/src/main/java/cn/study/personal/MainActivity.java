@@ -2150,11 +2150,13 @@ public final class MainActivity extends Activity {
             final EditText key = input(c, "粘贴新的 Key（sk-…）", "", true);
             key.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             addButton(c, "保存 Key", true, () -> {
-                String v = val(key).trim();
-                Data.require(!v.isEmpty(), "请粘贴 Key");
-                vault.save(v);
-                render();
-                toast("Key 已加密保存");
+                try {
+                    String v = val(key).trim();
+                    Data.require(!v.isEmpty(), "请粘贴 Key");
+                    vault.save(v);
+                    render();
+                    toast("Key 已加密保存");
+                } catch (Exception e) { error(e); }
             });
             divider(c);
             addText(c, "模型与参数", 15, INK, true);
