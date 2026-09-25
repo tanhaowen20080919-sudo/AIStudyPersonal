@@ -4,8 +4,8 @@
 
 ## 当前版本
 
-- `versionName`: `1.0.0`
-- `versionCode`: `1`
+- `versionName`: `1.1.0`（构建时由 `APP_VERSION_NAME` 环境变量传入，默认 `1.0.0`）
+- `versionCode`: `2`（构建时由 `APP_VERSION_CODE` 环境变量传入，默认 `1`）
 - `applicationId`: `cn.study.personal`
 - 最低 Android 版本：Android 8.0（API 26）
 - 目标 Android 版本：Android 15（API 35）
