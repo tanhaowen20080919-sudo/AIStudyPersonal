@@ -923,8 +923,11 @@ public final class MainActivity extends Activity {
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onNothingSelected(AdapterView<?> p) {}
             public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
-                trendSubject = opts.get(pos);
-                render();
+                // 注意：Spinner 在首次布局时会主动触发一次 onItemSelected（非用户操作）。
+                // 若此处无条件 render()，会形成 render→重建Spinner→再回调 的无限循环，
+                // 主线程被占满导致全页点不动。只在用户真正切换科目时才重绘。
+                String s = opts.get(pos);
+                if (!s.equals(trendSubject)) { trendSubject = s; render(); }
             }
         });
         sel.addView(sp, new LinearLayout.LayoutParams(0, -2, 1));
